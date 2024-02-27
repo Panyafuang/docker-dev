@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build:
+      context: . # this context option is essentially specifying
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:4200"
+    volumes:
+      - /app/node_modules # create placeholder in the container not map up anything with host
+      - .:/app # mapping current directory in host to the container
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "tests"]
